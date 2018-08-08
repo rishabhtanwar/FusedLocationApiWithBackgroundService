@@ -1,6 +1,8 @@
 package com.geoape.backgroundlocationexample;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +23,8 @@ public class BackgroundService extends Service {
     private final String TAG = "BackgroundService";
     private LocationListener mLocationListener;
     private LocationManager mLocationManager;
+    private NotificationManager notificationManager;
+
     private final int LOCATION_INTERVAL = 500;
     private final int LOCATION_DISTANCE = 10;
 
@@ -77,6 +81,7 @@ public class BackgroundService extends Service {
     public void onCreate()
     {
         Log.i(TAG, "onCreate");
+        startForeground(12345678, getNotification());
     }
 
     @Override
@@ -117,9 +122,18 @@ public class BackgroundService extends Service {
         this.onDestroy();
     }
 
+    private Notification getNotification() {
 
+        NotificationChannel channel = new NotificationChannel("channel_01", "My Channel", NotificationManager.IMPORTANCE_DEFAULT);
 
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(channel);
 
+        Notification.Builder builder = new Notification.Builder(getApplicationContext(), "channel_01").setAutoCancel(true);
+        return builder.build();
+    }
+
+    
     public class LocationServiceBinder extends Binder {
         public BackgroundService getService() {
             return BackgroundService.this;

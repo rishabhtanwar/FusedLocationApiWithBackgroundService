@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Intent intent = new Intent(this.getApplication(), BackgroundService.class);
         this.getApplication().startService(intent);
+//        this.getApplication().startForegroundService(intent);
         this.getApplication().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
 
     }
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void onServiceDisconnected(ComponentName className) {
-            if (className.getClassName().equals("GeoApeService")) {
+            if (className.getClassName().equals("BackgroundService")) {
                 gpsService = null;
             }
         }
