@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
   public BackgroundService gpsService;
   public boolean mTracking = false;
+  BroadcastReceiver receiver;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void setReceiver() {
-    BroadcastReceiver receiver = new BroadcastReceiver() {
+    receiver = new BroadcastReceiver() {
       @Override public void onReceive(Context context, Intent intent) {
         double lat = intent.getDoubleExtra("lat", 0);
         txtStatus.setText("" + lat);
@@ -60,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
 
   @Override protected void onStart() {
     super.onStart();
+  }
+
+  @Override protected void onDestroy() {
+    unregisterReceiver(receiver);
+    unbindService(serviceConnection);
+    super.onDestroy();
   }
 
   @OnClick(R.id.btn_start_tracking) public void startLocationButtonClick() {

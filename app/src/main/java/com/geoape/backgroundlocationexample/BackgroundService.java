@@ -81,6 +81,7 @@ public class BackgroundService extends Service {
 
   @Override public void onDestroy() {
     super.onDestroy();
+    Log.e(TAG, "onDestroy: ");
     if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) mGoogleApiClient.disconnect();
   }
 
