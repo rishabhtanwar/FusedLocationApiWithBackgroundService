@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
   @BindView(R.id.txt_status) TextView txtStatus;
 
   public BackgroundService gpsService;
+
   public boolean mTracking = false;
   BroadcastReceiver receiver;
 
