@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
   public BackgroundService gpsService;
 
   public boolean mTracking = false;
+
   BroadcastReceiver receiver;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
